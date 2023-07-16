@@ -7,27 +7,7 @@
 - 量子计算软件包：Qiskit、TensorCircuit
 - 量子金融软件包：Qiskit Finance
 
-### 任务一：基于 Python 的量子金融编程框架初探——期权定价应用
-
-> 难点：阅读文档、熟悉`Qiskit`和`Qiskit Finance`
-> 
-> 难度：初级
-
-Qiskit Finance是目前做的相对较为成熟的软件包。`example1`中展示了一个投资组合优化问题的简单例子，大致过程是将投资组合优化问题转化为一个二次规划问题，再用QAOA求解。
-
-**你需要做：**
-
-1. 仿照`example1`，用`Qiskit Finance`做一个欧式看涨期权定价的简单流程：将原问题转化为一个振幅估计问题，再用振幅估计的电路求解；
-2. 测试不同的概率模型以及相同概率模型不同参数下的定价结果；
-3. 清楚理解算法中各变量的含义，探究算法中参数对最终结果的影响，定性地或定量地。
-
-参考资料：
-
-- [Pricing European Call Options](https://qiskit.org/ecosystem/finance/tutorials/03_european_call_option_pricing.html)
-- [Quantum computational finance: Monte Carlo pricing of financial derivatives](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.98.022321)
-
-
-### 任务二：量子金融算法的进阶优化——组合优化问题
+### 任务：量子金融算法的进阶优化——组合优化问题
 
 > 难点：约束处理、参数更新
 >
@@ -71,53 +51,62 @@ $$
 >
 > 难度：高级
 
-#### 任务一拓展
+#### 任务拓展
 
-期权的价格分布一般通过训练量子生成对抗网络（QGAN）制备，请实现这一过程。
-
-参考资料：
-
-- [Quantum Generative Adversarial Networks for learning and loading random distributions](https://www.nature.com/articles/s41534-019-0223-2)
-- [Quantum Generative Adversarial Networks](https://learn.qiskit.org/course/machine-learning/quantum-generative-adversarial-networks)
-
-#### 任务二拓展
-
-在任务二中，我们只能用0或1确定买或不买，该怎么样确定每只股票购买多少份额呢？
+在任务中，我们只能用0或1确定买或不买，该怎么样确定每只股票购买多少份额呢？
 
 参考资料：
 
 - [Quantum computational finance: quantum algorithm for portfolio optimization](https://arxiv.org/abs/1811.03975)
 - [Solving linear systems of equations using HHL and its Qiskit implementation](https://learn.qiskit.org/course/ch-applications/solving-linear-systems-of-equations-using-hhl-and-its-qiskit-implementation)
 
+## 基本软件结构
+
+C:.
+│  浙江大学软件学院-量子金融组实验过程.md
+│
+└─summer-camp-2023
+    │  .gitignore
+    │  HHL_portfolio_optimization.ipynb: 关于HHL实现连续投资组合优化问题的代码
+    │  Portfolio Optimization With Constraint.ipynb: 关于实现带约束投资组合问题的代码
+    │  Portfolio Optimization With Unconstraint.ipynb: 关于实现不带约束的投资组合优化问题的代码
+    │  README.md
+    │
+    └─test code: 一些实现过程中测试的遗留代码。
+            example1.ipynb
+            example2.ipynb
+            HHL.ipyn
+
 ## 环境配置
 
-给出的例程主要基于Qiskit实现，这里以在VSCode中配置Python编程环境为例。
-
-建议使用Python的版本为3.10。
-
+创建虚拟环境，这里根据提供的建议，安装的Python版本为3.10。
 ```shell
-conda install -n "summer-camp-qf-2023" python=3.10
-conda activate summer-camp-qf-2023
+conda create -n zju-summer-camp-qf-2023 python=3.10
+conda activate zju-summer-camp-qf-2023
 ```
 
-安装`Qiskit Finance`。
-
+通过pip安装最新发行版本的Qiskit和Qiskit Finance（官网：https://qiskit.org/ecosystem/finance/）。
+Qiskit Finance 是一个开源框架，其中包含股票/证券问题的不确定性组件、金融问题的应用程序（例如**投资组合优化**）以及用于获取真实或随机数据以资助实验的数据提供商。
 ```shell
-pip install "qiskit[finance]"
+python -m pip install qiskit
+
+python -m pip install qiskit[finance]
 ```
 
-安装必要的画图工具。
+安装相关可能使用到的画图工具：
 
 ```shell
 pip install matplotlib
 pip install pylatexenc
 ```
 
-安装必要的优化算法包。
+安装一些优化算法包：
 
 ```shell
-pip install scikit-opt
+python -m pip install scikit-opt == 0.6.5
+
 ```
+由于最新版本的0.6.6的PSO不支持约束。
 
 安装可用于`Jupyter`的`IPython`内核，即可在`VSCode`中运行`Jupyter Notebook`。
 
